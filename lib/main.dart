@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_json_viewer/flutter_json_viewer.dart';
 import 'meteo_api.dart';
+import 'widgets/meteo_hourly_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,9 +17,13 @@ class HomePage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Erreur : ${snapshot.error}'));
           } else if (snapshot.hasData) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(12),
-              child: JsonViewer(snapshot.data!),
+            final hourlyList = MeteoApi.parseHourly(snapshot.data!);
+            return ListView.builder(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              itemCount: hourlyList.length,
+              itemBuilder: (context, index) {
+                return MeteoHourlyWidget(hour: hourlyList[index]);
+              },
             );
           }
           return const Center(child: Text('Aucune donnée'));

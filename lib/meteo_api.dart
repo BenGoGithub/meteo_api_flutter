@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'dart:io';
+import 'meteo_hourly.dart';
 
 class MeteoApi {
   static Future<Map<String, dynamic>>? _currentRequest;
@@ -45,5 +46,25 @@ class MeteoApi {
       _currentRequest = null; // reset la requête en cours quand terminée
     });
     return _currentRequest!;
+  }
+  static List<MeteoHourly> parseHourly(Map<String, dynamic> json) {
+    final List<MeteoHourly> list = [];
+
+    json.forEach((key, value) {
+      // Test simple si la clé ressemble à un datetime
+      if (key.length == 19 && value is Map<String, dynamic>) {
+        try {
+          final hour = MeteoHourly.fromJson(key, value);
+          list.add(hour);
+        } catch (e) {
+          // Ignorer en cas d’erreur de parsing
+        }
+      }
+    });
+
+    // Optionnel : trier par date
+    list.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
+    return list;
   }
 }
