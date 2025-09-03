@@ -12,6 +12,7 @@ void main() {
       pression: 101020,
       humidite: 81.7,
       ventMoyen: 10.2,
+      ventDirection: 210,
     );
 
     // Construire le widget dans le test environment
@@ -26,5 +27,6 @@ void main() {
     expect(find.textContaining('T°: 13.6'), findsOneWidget); // 286.7 - 273.15 = 13.55 arrondi à 13.6
     expect(find.textContaining('Pression: 101020'), findsOneWidget);
     expect(find.textContaining('Vent: 10'), findsOneWidget);
+    expect(find.textContaining('Direction'), findsOneWidget);
   });
 }
