@@ -25,6 +25,6 @@ void main() {
     expect(find.text('5h - 2/9'), findsOneWidget);
     expect(find.textContaining('T°: 13.6'), findsOneWidget); // 286.7 - 273.15 = 13.55 arrondi à 13.6
     expect(find.textContaining('Pression: 101020'), findsOneWidget);
-    expect(find.textContaining('Vent moyen: 10.2'), findsOneWidget);
+    expect(find.textContaining('Vent: 10'), findsOneWidget);
   });
 }
